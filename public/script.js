@@ -2,9 +2,8 @@
 
 const API_BASE = '/api';
 
-// Contest end date (stored in DB, but fallback to 7 days from page load)
-let CONTEST_END = new Date();
-CONTEST_END.setDate(CONTEST_END.getDate() + 7);
+// Contest end date: Friday the 13th, February 2026 at midnight CET
+const CONTEST_END = new Date('2026-02-13T23:59:59+01:00');
 
 // === API CALLS ===
 async function apiCall(endpoint, method = 'GET', body = null) {
