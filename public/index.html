@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦞 Lobster Music Club - OpenClaw Theme Song Contest</title>
+    <meta name="description" content="Submit and vote for the official OpenClaw AI theme song. Just a lobster with a plan.">
+    <meta property="og:title" content="🦞 Lobster Music Club">
+    <meta property="og:description" content="The Official OpenClaw Theme Song Contest - clack clack clack">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦞</text></svg>">
+</head>
+<body>
+    <!-- Dancing Lobsters Background -->
+    <div class="lobster-container" id="lobsterContainer"></div>
+    
+    <!-- Disco Ball -->
+    <div class="disco-ball">🪩</div>
+
+    <main>
+        <header class="hero">
+            <h1 class="title">
+                <span class="lobster-icon">🦞</span>
+                LOBSTER MUSIC CLUB
+                <span class="lobster-icon">🦞</span>
+            </h1>
+            <p class="subtitle">The Official OpenClaw Theme Song Contest</p>
+            <p class="tagline">Just a lobster with a plan. Clack clack clack.</p>
+        </header>
+
+        <section class="countdown-section">
+            <h2>⏰ Contest Ends In</h2>
+            <div class="countdown" id="countdown">
+                <div class="time-block">
+                    <span class="time-number" id="days">7</span>
+                    <span class="time-label">Days</span>
+                </div>
+                <div class="time-block">
+                    <span class="time-number" id="hours">0</span>
+                    <span class="time-label">Hours</span>
+                </div>
+                <div class="time-block">
+                    <span class="time-number" id="minutes">0</span>
+                    <span class="time-label">Minutes</span>
+                </div>
+                <div class="time-block">
+                    <span class="time-number" id="seconds">0</span>
+                    <span class="time-label">Seconds</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="songs-section">
+            <h2>🎵 Songs</h2>
+            <div class="songs-grid" id="songsGrid">
+                <div class="loading">Loading songs... 🦞</div>
+            </div>
+        </section>
+
+        <section class="submit-section">
+            <h2>🎤 Submit Your Song</h2>
+            <p>Think you've got what it takes to be the official OpenClaw theme? Show us what you got!</p>
+            
+            <form class="submit-form" id="submitForm">
+                <div class="form-group">
+                    <label for="artistName">Your Name / Artist Name</label>
+                    <input type="text" id="artistName" name="artistName" placeholder="DJ Lobster" required>
+                </div>
+                <div class="form-group">
+                    <label for="songTitle">Song Title</label>
+                    <input type="text" id="songTitle" name="songTitle" placeholder="Claws of Steel" required>
+                </div>
+                <div class="form-group">
+                    <label for="sunoUrl">Suno Song URL</label>
+                    <input type="url" id="sunoUrl" name="sunoUrl" placeholder="https://suno.com/song/..." required>
+                </div>
+                <button type="submit" class="submit-btn">
+                    🦞 SUBMIT YOUR BANGER 🦞
+                </button>
+            </form>
+        </section>
+
+        <section class="rules">
+            <h2>📜 The Rules</h2>
+            <div class="rules-grid">
+                <div class="rule">
+                    <span class="rule-icon">🎵</span>
+                    <h3>Make it on Suno</h3>
+                    <p>Create your OpenClaw theme song using Suno AI</p>
+                </div>
+                <div class="rule">
+                    <span class="rule-icon">🦞</span>
+                    <h3>Lobster Energy</h3>
+                    <p>Bonus points for crustacean vibes (but not required)</p>
+                </div>
+                <div class="rule">
+                    <span class="rule-icon">⏰</span>
+                    <h3>One Week</h3>
+                    <p>Contest runs for 7 days, then we pick a winner</p>
+                </div>
+                <div class="rule">
+                    <span class="rule-icon">🗳️</span>
+                    <h3>Community Votes</h3>
+                    <p>Click the lobster to vote! Most clacks wins</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about">
+            <h2>🤖 What is OpenClaw?</h2>
+            <p>OpenClaw is an AI assistant that lives in your terminal. It wakes up fresh each session but remembers through files. It has opinions. It's helpful. It might also be a lobster. Don't question it.</p>
+            <a href="https://github.com/openclaw/openclaw" target="_blank" class="cta-link">Learn More →</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with 🦞 by the OpenClaw community</p>
+        <p class="clack">clack clack clack</p>
+    </footer>
+
+    <script src="/script.js"></script>
+</body>
+</html>

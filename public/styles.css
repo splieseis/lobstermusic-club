@@ -1,0 +1,598 @@
+/* === BASE STYLES === */
+:root {
+    --lobster-red: #e63946;
+    --lobster-dark: #9d0208;
+    --ocean-blue: #1d3557;
+    --ocean-light: #457b9d;
+    --sand: #f1faee;
+    --gold: #ffb703;
+    --neon-pink: #ff006e;
+    --neon-cyan: #00f5d4;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--ocean-blue) 0%, #0d1b2a 100%);
+    color: var(--sand);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* === DANCING LOBSTERS BACKGROUND === */
+.lobster-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.dancing-lobster {
+    position: absolute;
+    font-size: 2rem;
+    animation: dance 1s ease-in-out infinite, float 8s ease-in-out infinite;
+    opacity: 0.6;
+    filter: drop-shadow(0 0 10px rgba(230, 57, 70, 0.5));
+}
+
+@keyframes dance {
+    0%, 100% { transform: rotate(-15deg) scale(1); }
+    25% { transform: rotate(15deg) scale(1.1); }
+    50% { transform: rotate(-15deg) scale(1); }
+    75% { transform: rotate(15deg) scale(1.1); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+/* === DISCO BALL === */
+.disco-ball {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 4rem;
+    animation: spin 4s linear infinite, glow 2s ease-in-out infinite;
+    z-index: 1;
+}
+
+@keyframes spin {
+    from { transform: translateX(-50%) rotate(0deg); }
+    to { transform: translateX(-50%) rotate(360deg); }
+}
+
+@keyframes glow {
+    0%, 100% { filter: drop-shadow(0 0 20px var(--gold)); }
+    50% { filter: drop-shadow(0 0 40px var(--neon-pink)); }
+}
+
+/* === MAIN CONTENT === */
+main {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 100px 20px 40px;
+}
+
+/* === HERO === */
+.hero {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.title {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    color: var(--lobster-red);
+    text-shadow: 
+        4px 4px 0 var(--gold),
+        8px 8px 0 var(--ocean-blue);
+    letter-spacing: 4px;
+    animation: titlePulse 2s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+.lobster-icon {
+    display: inline-block;
+    animation: dance 0.5s ease-in-out infinite;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: var(--ocean-light);
+    margin-top: 10px;
+}
+
+.tagline {
+    font-size: 1.1rem;
+    color: var(--gold);
+    font-style: italic;
+    margin-top: 10px;
+}
+
+/* === COUNTDOWN === */
+.countdown-section {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.countdown-section h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    color: var(--neon-cyan);
+    margin-bottom: 20px;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.time-block {
+    background: rgba(255, 255, 255, 0.1);
+    border: 3px solid var(--lobster-red);
+    border-radius: 15px;
+    padding: 20px 30px;
+    min-width: 100px;
+    backdrop-filter: blur(10px);
+}
+
+.time-number {
+    display: block;
+    font-family: 'Bangers', cursive;
+    font-size: 3rem;
+    color: var(--gold);
+}
+
+.time-label {
+    font-size: 0.9rem;
+    color: var(--ocean-light);
+    text-transform: uppercase;
+}
+
+/* === SONGS SECTION === */
+.songs-section {
+    margin-bottom: 60px;
+}
+
+.songs-section h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 2.5rem;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.songs-grid {
+    display: grid;
+    gap: 25px;
+}
+
+.loading {
+    text-align: center;
+    color: var(--ocean-light);
+    font-size: 1.2rem;
+    padding: 40px;
+}
+
+/* === SONG CARDS === */
+.song-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    border: 3px solid var(--lobster-red);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.song-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(230, 57, 70, 0.3);
+}
+
+.song-card.featured {
+    border-color: var(--gold);
+    box-shadow: 0 0 30px rgba(255, 183, 3, 0.3);
+}
+
+.song-card.pending {
+    opacity: 0.6;
+    border-style: dashed;
+}
+
+.song-header {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.song-info h3 {
+    font-family: 'Bangers', cursive;
+    font-size: 1.8rem;
+    color: var(--sand);
+}
+
+.song-info .artist {
+    color: var(--ocean-light);
+    font-size: 1rem;
+}
+
+.song-badge {
+    background: var(--gold);
+    color: var(--ocean-blue);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.song-badge.pending {
+    background: var(--ocean-light);
+}
+
+.suno-embed {
+    margin: 20px 0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.suno-embed iframe {
+    border-radius: 12px;
+    width: 100%;
+    height: 180px;
+    border: none;
+}
+
+.vote-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.vote-btn {
+    background: linear-gradient(145deg, var(--lobster-red), var(--lobster-dark));
+    border: none;
+    border-radius: 50px;
+    padding: 15px 40px;
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 5px 20px rgba(230, 57, 70, 0.4);
+}
+
+.vote-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 30px rgba(230, 57, 70, 0.6);
+}
+
+.vote-btn:active {
+    transform: scale(0.95);
+}
+
+.vote-btn.voted {
+    background: linear-gradient(145deg, var(--gold), #fb8500);
+}
+
+.vote-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.vote-icon {
+    font-size: 2rem;
+    animation: dance 0.5s ease-in-out infinite;
+}
+
+.vote-count {
+    background: rgba(0,0,0,0.3);
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+/* === SUBMIT FORM === */
+.submit-section {
+    background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    border: 3px solid var(--neon-cyan);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 60px;
+    backdrop-filter: blur(10px);
+}
+
+.submit-section h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 2.5rem;
+    color: var(--neon-cyan);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.submit-section > p {
+    text-align: center;
+    color: var(--ocean-light);
+    margin-bottom: 30px;
+}
+
+.submit-form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--sand);
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid var(--ocean-light);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    color: var(--sand);
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 245, 212, 0.3);
+}
+
+.form-group input::placeholder {
+    color: rgba(255,255,255,0.4);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 20px;
+    background: linear-gradient(145deg, var(--neon-pink), #c9184a);
+    border: none;
+    border-radius: 15px;
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 5px 20px rgba(255, 0, 110, 0.4);
+}
+
+.submit-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(255, 0, 110, 0.6);
+}
+
+.submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* === RULES === */
+.rules {
+    margin-bottom: 60px;
+}
+
+.rules h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 2.5rem;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.rule {
+    background: rgba(255,255,255,0.05);
+    border: 2px solid var(--ocean-light);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.rule:hover {
+    transform: translateY(-5px);
+    border-color: var(--lobster-red);
+}
+
+.rule-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.rule h3 {
+    font-family: 'Bangers', cursive;
+    font-size: 1.3rem;
+    color: var(--sand);
+    margin-bottom: 10px;
+}
+
+.rule p {
+    color: var(--ocean-light);
+    font-size: 0.9rem;
+}
+
+/* === ABOUT === */
+.about {
+    text-align: center;
+    padding: 40px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    margin-bottom: 60px;
+}
+
+.about h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    color: var(--neon-cyan);
+    margin-bottom: 20px;
+}
+
+.about p {
+    color: var(--ocean-light);
+    max-width: 600px;
+    margin: 0 auto 20px;
+    line-height: 1.6;
+}
+
+.cta-link {
+    display: inline-block;
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 25px;
+    border: 2px solid var(--gold);
+    border-radius: 30px;
+    transition: all 0.3s;
+}
+
+.cta-link:hover {
+    background: var(--gold);
+    color: var(--ocean-blue);
+}
+
+/* === FOOTER === */
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+footer p {
+    color: var(--ocean-light);
+}
+
+footer .clack {
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    color: var(--lobster-red);
+    margin-top: 10px;
+    animation: titlePulse 1s ease-in-out infinite;
+}
+
+/* === TOAST NOTIFICATION === */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: linear-gradient(145deg, var(--lobster-red), var(--lobster-dark));
+    color: white;
+    padding: 20px 40px;
+    border-radius: 50px;
+    font-family: 'Bangers', cursive;
+    font-size: 1.3rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index: 1000;
+    opacity: 0;
+    transition: transform 0.5s, opacity 0.5s;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.toast.error {
+    background: linear-gradient(145deg, #dc3545, #a71d2a);
+}
+
+.toast.success {
+    background: linear-gradient(145deg, var(--neon-cyan), #00b4d8);
+    color: var(--ocean-blue);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+    .title {
+        font-size: 2rem;
+    }
+    
+    .countdown {
+        gap: 10px;
+    }
+    
+    .time-block {
+        padding: 15px 20px;
+        min-width: 70px;
+    }
+    
+    .time-number {
+        font-size: 2rem;
+    }
+    
+    .vote-btn {
+        padding: 12px 25px;
+        font-size: 1.2rem;
+    }
+    
+    .submit-section {
+        padding: 25px;
+    }
+    
+    .song-header {
+        flex-direction: column;
+    }
+}
+
+/* === SPARKLE CURSOR EFFECT === */
+.sparkle {
+    position: fixed;
+    pointer-events: none;
+    font-size: 1.5rem;
+    animation: sparkle-fade 1s ease-out forwards;
+    z-index: 9999;
+}
+
+@keyframes sparkle-fade {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+    }
+}

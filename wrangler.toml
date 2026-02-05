@@ -1,0 +1,9 @@
+name = "lobstermusic-club"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "./public"
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "lobstermusic"
+database_id = "13fd09f8-0a75-43e0-ae13-00d27518dd36"
