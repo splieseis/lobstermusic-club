@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦞 Admin - Lobster Music Club</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 { color: #e63946; margin-bottom: 20px; }
+        h2 { color: #ffb703; margin: 30px 0 15px; }
+        .auth-section { margin-bottom: 30px; }
+        input[type="password"], input[type="text"] {
+            padding: 10px 15px;
+            border: 2px solid #457b9d;
+            border-radius: 8px;
+            background: #16213e;
+            color: #eee;
+            font-size: 1rem;
+            width: 300px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin: 5px;
+        }
+        .btn-primary { background: #e63946; color: white; }
+        .btn-success { background: #2a9d8f; color: white; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-warning { background: #ffb703; color: #1a1a2e; }
+        button:hover { opacity: 0.9; transform: scale(1.02); }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        th { background: #16213e; color: #ffb703; }
+        tr:hover { background: rgba(255,255,255,0.05); }
+        .status-pending { color: #ffb703; }
+        .status-approved { color: #2a9d8f; }
+        .status-rejected { color: #dc3545; }
+        .featured { color: #ffb703; }
+        .song-url { 
+            max-width: 200px; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .hidden { display: none; }
+        #message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+        #message.success { display: block; background: #2a9d8f33; border: 1px solid #2a9d8f; }
+        #message.error { display: block; background: #dc354533; border: 1px solid #dc3545; }
+        .refresh-btn { float: right; }
+    </style>
+</head>
+<body>
+    <h1>🦞 Lobster Music Club Admin</h1>
+    
+    <div class="auth-section">
+        <input type="password" id="adminKey" placeholder="Enter Admin Key">
+        <button class="btn-primary" onclick="loadSongs()">🔓 Login & Load Songs</button>
+    </div>
+    
+    <div id="message"></div>
+    
+    <div id="content" class="hidden">
+        <h2>⏳ Pending Approval <button class="btn-primary refresh-btn" onclick="loadSongs()">🔄 Refresh</button></h2>
+        <table id="pendingTable">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>URL</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="pendingBody"></tbody>
+        </table>
+        
+        <h2>✅ Approved Songs</h2>
+        <table id="approvedTable">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>Votes</th>
+                    <th>Featured</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="approvedBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        const API = '/api/admin';
+        
+        function getKey() {
+            return document.getElementById('adminKey').value;
+        }
+        
+        function showMessage(text, type) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = type;
+            setTimeout(() => msg.className = '', 3000);
+        }
+        
+        async function apiCall(endpoint, method = 'GET') {
+            const res = await fetch(`${API}${endpoint}`, {
+                method,
+                headers: { 'X-Admin-Key': getKey() }
+            });
+            return res.json();
+        }
+        
+        async function loadSongs() {
+            try {
+                const data = await apiCall('/songs');
+                if (data.error) {
+                    showMessage('Auth failed: ' + data.error, 'error');
+                    return;
+                }
+                
+                document.getElementById('content').classList.remove('hidden');
+                
+                const pending = data.songs.filter(s => s.status === 'pending');
+                const approved = data.songs.filter(s => s.status === 'approved' || s.featured);
+                
+                document.getElementById('pendingBody').innerHTML = pending.length ? pending.map(s => `
+                    <tr>
+                        <td>${s.title}</td>
+                        <td>${s.artist}</td>
+                        <td class="song-url"><a href="${s.suno_url}" target="_blank">${s.suno_url}</a></td>
+                        <td>
+                            <button class="btn-success" onclick="approve('${s.id}')">✅ Approve</button>
+                            <button class="btn-danger" onclick="deleteSong('${s.id}')">🗑️ Delete</button>
+                        </td>
+                    </tr>
+                `).join('') : '<tr><td colspan="4">No pending songs 🦞</td></tr>';
+                
+                document.getElementById('approvedBody').innerHTML = approved.map(s => `
+                    <tr>
+                        <td>${s.title}</td>
+                        <td>${s.artist}</td>
+                        <td>${s.votes}</td>
+                        <td>${s.featured ? '⭐ Yes' : 'No'}</td>
+                        <td>
+                            ${!s.featured ? `<button class="btn-warning" onclick="feature('${s.id}')">⭐ Feature</button>` : ''}
+                            <button class="btn-danger" onclick="deleteSong('${s.id}')">🗑️ Delete</button>
+                        </td>
+                    </tr>
+                `).join('');
+                
+                showMessage('Songs loaded!', 'success');
+            } catch (e) {
+                showMessage('Error: ' + e.message, 'error');
+            }
+        }
+        
+        async function approve(id) {
+            await apiCall(`/approve/${id}`, 'POST');
+            showMessage('Song approved!', 'success');
+            loadSongs();
+        }
+        
+        async function feature(id) {
+            await apiCall(`/feature/${id}`, 'POST');
+            showMessage('Song featured!', 'success');
+            loadSongs();
+        }
+        
+        async function deleteSong(id) {
+            if (!confirm('Delete this song?')) return;
+            await apiCall(`/delete/${id}`, 'POST');
+            showMessage('Song deleted!', 'success');
+            loadSongs();
+        }
+    </script>
+</body>
+</html>
